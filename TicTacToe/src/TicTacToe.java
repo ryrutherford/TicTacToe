@@ -32,7 +32,10 @@ public class TicTacToe {
 	 * diag: a 2 X 2 matrix that stores the status and capacity of the south east diagonal in diag[0][0] and diag[0][1] respectively
 	 * 		 the status and capacity of the south west diagonal are stored in diag[1][0] and diag[1][1] respectively
 	 * 
-	 * the names of the players are stored in a character array called names
+	 * numPlayers: the number of players in the game are stored in an integer
+	 * --> this attribute isn't necessary right now but it will be if the game is expanded to include more players
+	 * 
+	 * names: the names of the players are stored in an integer array called names
 	 */
 	
 	private ArrayList<Integer> board;
@@ -44,22 +47,26 @@ public class TicTacToe {
 	private int[][] row;
 	private int[][] col;
 	private int[][] diag = {{-1,0},{-1,0}};
-	private char[] names;
+	private int numPlayers;
+	private int[] names;
 	
 	/* CONSTRUCTOR
 	 * the constructor takes an integer that will determine how big the board size is
 	 * it also initializes an empty board with -1's
 	 */
 	
-	public TicTacToe(int width) {
+	public TicTacToe(int width, int numPlayers) {
 		//minimum board size is 3x3
 		if(width < 3) {
 			width = 3;
 		}
+		
+		//initializing the scanner
+		this.move = new Scanner(System.in);
+		
 		//initializing the board
 		this.size = width*width;
 		this.width = width;
-		this.move = new Scanner(System.in);
 		this.board = new ArrayList<Integer>(this.size);
 		for(int i = 0; i < this.size; i++) {
 			this.board.add(i,-1);
@@ -68,10 +75,12 @@ public class TicTacToe {
 		//randomly assigns the first turn to player A or player B
 		this.turn = (int)(2*Math.random());
 		
-		//initializing the names
-		this.names = new char[2];
-		names[0] = 'A';
-		names[1] = 'B';
+		//initializing the names and numPlayers
+		this.numPlayers = numPlayers;
+		this.names = new int[this.numPlayers];
+		for(int i = 0; i < this.numPlayers; i++) {
+			names[i] = i;
+		}
 		
 		//initializing the board trackers
 		this.row = new int[this.width][2];
@@ -280,8 +289,18 @@ public class TicTacToe {
 		//double for loop iterates through the arraylist like it's a width X width matrix
 		for(int i = 0; i < this.width; i++) {
 			
-			//prints out the section dividers of the board
+			//prints out the column numbers
 			int k = 0;
+			while(i == 0 && k < this.width) {
+				out += "   " + k + "  ";
+				k++;
+				if(k == this.width) {
+					out+= "\n";
+				}
+			}
+			k = 0;
+			
+			//prints out the section dividers of the board
 			while(i != 0 && k < this.width) {
 				out += "------";
 				if(k == this.width - 1) {
@@ -308,13 +327,13 @@ public class TicTacToe {
 				}
 				else {
 					if(this.board.get(j) == -1) {
-						out += "|     |";
+						out += "|     |   " + (j/this.width);
 					}
 					else if(this.board.get(j) == 0) {
-						out += "|  O  |";
+						out += "|  O  |   " + (j/this.width);
 					}
 					else {
-						out += "|  X  |";
+						out += "|  X  |   " + (j/this.width);
 					}
 				}
 
