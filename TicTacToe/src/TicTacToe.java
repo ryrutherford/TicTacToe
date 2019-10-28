@@ -233,7 +233,8 @@ public class TicTacToe {
 	 * invoke this method to play a game of Tic Tac Toe 
 	 */
 	public void play() {
-		System.out.println("Welcome to TicTacToe. Please note that the minimum board size is 3X3.");
+		System.out.println("Welcome to TicTacToe. Please note that the minimum board size is 3X3. Here is the board:");
+		System.out.println(this);
 		while(this.numMoves < this.size) {
 			try {
 				System.out.println("Player " + this.names[turn] + "'s turn. Enter a move as 'Column #' press Enter"
