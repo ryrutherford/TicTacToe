@@ -112,7 +112,7 @@ public class TicTacToe {
 				diagWin = diagWin || diag[i][0] == 1 && diag[i][1] == this.width;
 				
 				if(colWin || rowWin || diagWin) {
-					System.out.println("Player " + this.names[this.turn] + " wins!");
+					System.out.println("Player " + this.names[(this.turn + 1)%2] + " wins!");
 					return true;
 				}
 			}
