@@ -46,7 +46,12 @@ public class TicTacToe {
 	public TicTacToe(int width, int numPlayers, int toWin) {
 		//minimum board size is 3x3
 		if(width < 3) {
+			System.out.println("The width must be greater than or equal to 3. The width is now 3.");
 			width = 3;
+		}
+		if(toWin > width) {
+			System.out.println("The value to win must be less than or equal to the width of the board, the value to win is now the width");
+			toWin = width;
 		}
 		
 		//initializing the scanner
@@ -160,8 +165,6 @@ public class TicTacToe {
 				catch(Exception e) {
 					//do nothing, array index out of bounds or negative index exception was thrown
 				}
-				
-				
 			}
 		}
 		return false;
@@ -360,8 +363,5 @@ public class TicTacToe {
 	}
 	public int getTurn() {
 		return this.turn;
-	}
-	
-
-	
+	}	
 }
