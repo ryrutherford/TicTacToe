@@ -23,8 +23,6 @@ public class TicTacToe {
 	 * 
 	 * numPlayers: the number of players in the game are stored in an integer
 	 * --> this attribute isn't necessary right now but it will be if the game is expanded to include more players
-	 * 
-	 * names: the names of the players are stored in an integer array called names
 	 */
 	
 	//private ArrayList<Integer> board;
@@ -36,7 +34,7 @@ public class TicTacToe {
 	private int numMoves;
 	private Scanner move;
 	private int numPlayers;
-	private int[] names;
+
 	
 	/* CONSTRUCTOR
 	 * the constructor takes an integer that will determine how big the board size is
@@ -52,6 +50,14 @@ public class TicTacToe {
 		if(toWin > width) {
 			System.out.println("The value to win must be less than or equal to the width of the board, the value to win is now the width");
 			toWin = width;
+		}
+		if(numPlayers > 26) {
+			System.out.println("No more than 26 players can play the game. The number of players is now 26");
+			numPlayers = 26;
+		}
+		if(numPlayers > width) {
+			System.out.println("The number of players must be less than or equal to the width of the board, the number of players is now the width");
+			numPlayers = width;
 		}
 		
 		//initializing the scanner
@@ -69,16 +75,10 @@ public class TicTacToe {
 				this.map[i][j] = -1;
 			}
 		}
-		
-		//randomly assigns the first turn to player A or player B
-		this.turn = (int)(2*Math.random());
-		
-		//initializing the names and numPlayers
-		this.numPlayers = numPlayers;
-		this.names = new int[this.numPlayers];
-		for(int i = 0; i < this.numPlayers; i++) {
-			names[i] = i;
-		}
+		//initializing the numPlayers
+		this.numPlayers = numPlayers;	
+		//randomly assigns the first turn to player 0-numPlayers-1
+		this.turn = (int)(this.numPlayers*Math.random());
 	}
 	
 	/*
@@ -123,7 +123,7 @@ public class TicTacToe {
 						}
 					}
 					if(k == this.toWin) { //if we iterated through the whole loop then a player has won
-						System.out.println("Player " + cur + " has won! Congratulations.");
+						System.out.println("Player " + (char)(cur+65) + " has won! Congratulations.");
 						return true;
 					}
 				}
@@ -140,7 +140,7 @@ public class TicTacToe {
 						}
 					}
 					if(k == this.toWin) { //if we iterated through the whole loop then a player has won
-						System.out.println("Player " + cur + " has won! Congratulations.");
+						System.out.println("Player " + (char)(cur+65) + " has won! Congratulations.");
 						return true;
 					}
 				}
@@ -158,7 +158,7 @@ public class TicTacToe {
 						}
 					}
 					if(k == this.toWin) { //if we iterated through the whole loop then a player has won
-						System.out.println("Player " + cur + " has won! Congratulations.");
+						System.out.println("Player " + (char)(cur+65) + " has won! Congratulations.");
 						return true;
 					}
 				}
@@ -177,7 +177,7 @@ public class TicTacToe {
 	
 	private void moveMade(int[] location) {
 		try {
-			System.out.println("Attempting to execute player " + this.turn + "'s move");
+			System.out.println("Attempting to execute player " + (char) (this.turn+65) + "'s move");
 			int row = location[0];
 			int col = location[1];
 			if(this.map[row][col] == -1) {
@@ -191,7 +191,7 @@ public class TicTacToe {
 				System.out.println("Move Successful.");
 				
 				//updating the turn
-				this.turn = (this.turn + 1)%2;
+				this.turn = (this.turn + 1)%(this.numPlayers);
 			}
 			else {
 				System.out.println("Move failed. Try again.");
@@ -220,7 +220,7 @@ public class TicTacToe {
 		}
 		
 		//randomizing the turn again
-		this.turn = (int)(2*Math.random());
+		this.turn = (int)(this.numPlayers*Math.random());
 		
 		//resetting the number of moves made
 		this.numMoves = 0;
@@ -236,7 +236,7 @@ public class TicTacToe {
 		System.out.println(this);
 		while(this.numMoves < this.size) {
 			try {
-				System.out.println("Player " + this.names[turn] + "'s turn. Enter a move as 'Row #' press Enter"
+				System.out.println("Player " + (char) (this.turn + 65) + "'s turn. Enter a move as 'Row #' press Enter"
 						+ " then 'Column #' and press Enter again i.e. 0 'press enter' 0 'press enter'");
 				//parsing the user's input
 				int[] location = new int[2];
@@ -323,22 +323,16 @@ public class TicTacToe {
 					if(this.map[i][j]==-1) {
 						out += "|     ";
 					}
-					else if(this.map[i][j]==0) {
-						out += "|  O  ";
-					}
 					else {
-						out += "|  X  ";
+						out += "|  " + (char) (map[i][j] + 65) + "  ";
 					}
 				}
 				else {
-					if(this.map[i][j] == -1) {
-						out += "|     |   " + (i);
-					}
-					else if(this.map[i][j] == 0) {
-						out += "|  O  |   " + (i);
+					if(this.map[i][j]==-1) {
+						out += "|     |   " + i;
 					}
 					else {
-						out += "|  X  |   " + (i);
+						out += "|  " + (char) (map[i][j] + 65) + "  |   " + i;
 					}
 				}
 
