@@ -2,7 +2,7 @@ import java.util.*;
 
 public class TicTacToe {
 	/* ATTRIBUTES
-	 * map: the board is represented by a 2d matrix
+	 * map: the map is represented by a 2d matrix
 	 * --> -1 means there is an empty slot
 	 * --> 0 means there is an O in the slot
 	 * --> 1 means there is an X in the slot
