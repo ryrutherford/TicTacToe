@@ -48,16 +48,24 @@ public class TicTacToe {
 			width = 3;
 		}
 		if(toWin > width) {
-			System.out.println("The value to win must be less than or equal to the width of the board, the value to win is now the width");
+			System.out.println("The value to win must be less than or equal to the width of the board. The value to win is now the width");
 			toWin = width;
+		}
+		if(toWin < 3) {
+			System.out.println("The value to win must be greater than or equal to 3. The value to win is now 3");
+			toWin = 3;
 		}
 		if(numPlayers > 26) {
 			System.out.println("No more than 26 players can play the game. The number of players is now 26");
 			numPlayers = 26;
 		}
 		if(numPlayers > width) {
-			System.out.println("The number of players must be less than or equal to the width of the board, the number of players is now the width");
+			System.out.println("The number of players must be less than or equal to the width of the board. The number of players is now the width");
 			numPlayers = width;
+		}
+		if(numPlayers < 2) {
+			System.out.println("The number of players must be greater than or equal to 2. The number of players is now 2");
+			numPlayers = 2;
 		}
 		
 		//initializing the scanner
