@@ -2,7 +2,7 @@ import java.util.*;
 
 public class TicTacToe {
 	/* ATTRIBUTES
-	 * map: the map is represented by a 2d matrix
+	 * board: the board is represented by a 2d matrix
 	 * --> -1 means there is an empty slot
 	 * --> 0 means there is an O in the slot
 	 * --> 1 means there is an X in the slot
@@ -25,8 +25,7 @@ public class TicTacToe {
 	 * --> this attribute isn't necessary right now but it will be if the game is expanded to include more players
 	 */
 	
-	//private ArrayList<Integer> board;
-	private int[][] map;
+	private int[][] board;
 	private int turn;
 	private int width;
 	private int size;
@@ -77,10 +76,10 @@ public class TicTacToe {
 		this.width = width;
 		
 		//initializing the map
-		this.map = new int[width][width];
+		this.board = new int[width][width];
 		for(int i = 0; i < this.width; i++) {
 			for(int j = 0; j < this.width; j++) {
-				this.map[i][j] = -1;
+				this.board[i][j] = -1;
 			}
 		}
 		//initializing the numPlayers
@@ -105,16 +104,16 @@ public class TicTacToe {
 			for(int j = 0; j < this.width; j++) {
 
 				//ROW CHECK
-				int cur = this.map[i][j];
+				int cur = this.board[i][j];
 				try {
 					for(k = 1; k < this.toWin; k++) {
-						prev = this.map[i][j-k];
+						prev = this.board[i][j-k];
 						if(prev != cur || cur == -1) { //if prev and cur don't match or cur = -1 then the row hasn't been won
 							break;
 						}
 					}
 					if(k == this.toWin) { //if we iterated through the whole loop then a player has won
-						System.out.println("Player " + cur + " has won! Congratulations.");
+						System.out.println("Player " + (char)(cur+65) + " has won! Congratulations.");
 						return true;
 					}
 				}
@@ -125,7 +124,7 @@ public class TicTacToe {
 				//SW DIAG CHECK
 				try {
 					for(k = 1; k < this.toWin; k++) {
-						prev = this.map[i-k][j-k];
+						prev = this.board[i-k][j-k];
 						if(prev != cur || cur == -1) { //if prev isn't equal to cur or cur = -1 then the SW diag hasn't been won
 							break;
 						}
@@ -142,7 +141,7 @@ public class TicTacToe {
 				//SE DIAG CHECK
 				try {
 					for(k = 1; k < this.toWin; k++) {
-						prev = this.map[i-k][j+k];
+						prev = this.board[i-k][j+k];
 						if(prev != cur || cur == -1) { //if prev isn't equal to cur or cur = -1 then the SE diag hasn't been won
 							break;
 						}
@@ -157,10 +156,10 @@ public class TicTacToe {
 				}
 				
 				//COL CHECK
-				cur = this.map[j][i];
+				cur = this.board[i][j];
 				try {
 					for(k = 1; k < this.toWin; k++) {
-						prev = this.map[i-k][j];
+						prev = this.board[i-k][j];
 						if(prev != cur || cur == -1) { //if prev isn't equal to cur or cur = -1 then the SW diag hasn't been won
 							break;
 						}
@@ -188,14 +187,14 @@ public class TicTacToe {
 			System.out.println("Attempting to execute player " + (char) (this.turn+65) + "'s move");
 			int row = location[0];
 			int col = location[1];
-			if(this.map[row][col] == -1) {
+			if(this.board[row][col] == -1) {
 				
 				//increasing the number of moves
 				this.numMoves++;
 				
 				//making the move
 				//this.board.set(index, this.turn);
-				this.map[row][col] = this.turn;
+				this.board[row][col] = this.turn;
 				System.out.println("Move Successful.");
 				
 				//updating the turn
@@ -223,7 +222,7 @@ public class TicTacToe {
 		for(int i = 0; i < this.width; i++) {
 			//this.board.set(i, -1);
 			for(int j = 0; j < this.width; j++) {
-				this.map[i][j] = -1;
+				this.board[i][j] = -1;
 			}
 		}
 		
@@ -328,19 +327,19 @@ public class TicTacToe {
 			//prints out the X's, O's, or empty boxes
 			for(int j = 0; j < this.width; j++) {
 				if(j < this.width -1) {
-					if(this.map[i][j]==-1) {
+					if(this.board[i][j]==-1) {
 						out += "|     ";
 					}
 					else {
-						out += "|  " + (char) (map[i][j] + 65) + "  ";
+						out += "|  " + (char) (board[i][j] + 65) + "  ";
 					}
 				}
 				else {
-					if(this.map[i][j]==-1) {
+					if(this.board[i][j]==-1) {
 						out += "|     |   " + i;
 					}
 					else {
-						out += "|  " + (char) (map[i][j] + 65) + "  |   " + i;
+						out += "|  " + (char) (board[i][j] + 65) + "  |   " + i;
 					}
 				}
 
@@ -360,8 +359,8 @@ public class TicTacToe {
 	public int getWidth() {
 		return this.width;
 	}
-	public int[][] getMap() {
-		return this.map;
+	public int[][] getBoard() {
+		return this.board;
 	}
 	public int getTurn() {
 		return this.turn;
